@@ -67,7 +67,7 @@ public class WeatherEntity {
         return temperature;
     }
 
-    public LocalDateTime getUpdatedAt() {
+    public LocalDateTime getUpdatedTime() {
         return updatedAt;
     }
 

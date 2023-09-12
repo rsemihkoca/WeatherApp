@@ -6,12 +6,13 @@ public record Location(
         String name,
         String country,
         String region,
-
-        String lat,
-        String lon,
-        @JsonProperty("tz_id")
-        @JsonProperty("localtime")
-        String localTime
-) {
-}
-
+        Double lat,
+        Double lon,
+        @JsonProperty("timezone_id")
+        String timezoneId,
+        String localtime,
+        @JsonProperty("localtime_epoch")
+        String localtimeEpoch,
+        @JsonProperty("utc_offset")
+        String utcOffset
+) { }

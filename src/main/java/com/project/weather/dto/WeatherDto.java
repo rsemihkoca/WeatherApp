@@ -9,13 +9,14 @@ public record WeatherDto(
         String cityName,
         String country,
         Integer temperature,
-
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
         LocalDateTime updatedTime
 ) {
-    static public WeatherDto convert(WeatherEntity from) {
-        return new WeatherDto(from.getCityName(), from.getCountry(), from.getTemperature(), from.getUpdatedAt());
+    public static WeatherDto convert(WeatherEntity from) {
+        return new WeatherDto(
+                from.getCityName(),
+                from.getCountry(),
+                from.getTemperature(),
+                from.getUpdatedTime());
     }
-
-
 }
