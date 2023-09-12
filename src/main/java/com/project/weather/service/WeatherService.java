@@ -44,7 +44,7 @@ public class WeatherService {
 
     }
 
-    public WeatherEntity getWeatherFromWeatherStack(String city) {
+    private WeatherEntity getWeatherFromWeatherStack(String city) {
         String url = "http://api.weatherstack.com/current?access_key=645749b5550ea09a8814a4a0cfbe3f8d&query=" + city;
         ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
 

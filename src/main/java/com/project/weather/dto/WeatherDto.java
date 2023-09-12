@@ -1,14 +1,20 @@
 package com.project.weather.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.weather.model.WeatherEntity;
 
-public record WeatherDto (
-    String cityName,
-    String country,
-    Integer temperature
+import java.time.LocalDateTime;
+
+public record WeatherDto(
+        String cityName,
+        String country,
+        Integer temperature,
+
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+        LocalDateTime updatedTime
 ) {
     static public WeatherDto convert(WeatherEntity from) {
-        return new WeatherDto(from.getCityName(), from.getCountry(), from.getTemperature());
+        return new WeatherDto(from.getCityName(), from.getCountry(), from.getTemperature(), from.getUpdatedAt());
     }
 
 
