@@ -35,9 +35,13 @@ public class WeatherService {
         //Returned value can be null, so we need to use Optional
         Optional<WeatherEntity> weatherEntityOptional = weatherRepository.findFirstByRequestedCityNameOrderByUpdatedTimeDesc(city);
 
-        //If we have weatherEntityOptional, we can use it, otherwise we need to call API
-        return weatherEntityOptional.map(WeatherDto::convert).orElseGet(() -> WeatherDto.convert(getWeatherFromWeatherStack(city)));
-
+        return weatherEntityOptional.map(weather -> {
+            // If the last update was more than 1 hour ago, we need to update the weather
+            if (weather.getUpdatedTime().isBefore(LocalDateTime.now().minusHours(30))) {
+                return WeatherDto.convert(getWeatherFromWeatherStack(city));
+            }
+            return WeatherDto.convert(weather);
+        }).orElseGet(() -> WeatherDto.convert(getWeatherFromWeatherStack(city)));
     }
 
     private WeatherEntity getWeatherFromWeatherStack(String city) {
