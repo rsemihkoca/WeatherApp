@@ -14,34 +14,34 @@ public class WeatherEntity {
 
     @Id
     @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
     private String requestedCityName;
     private String cityName;
     private String country;
     private Integer temperature;
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedTime;
     private LocalDateTime responseLocalTime;
 
     // Spring Data JPA needs 3 constructors: default, with id, without id
-    public WeatherEntity(String id, String requestedCityName, String cityName, String country, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
+    public WeatherEntity(String id, String requestedCityName, String cityName, String country, Integer temperature, LocalDateTime updatedTime, LocalDateTime responseLocalTime) {
         this.id = id;
         this.requestedCityName = requestedCityName;
         this.cityName = cityName;
         this.country = country;
         this.temperature = temperature;
-        this.updatedAt = updatedAt;
+        this.updatedTime = updatedTime;
         this.responseLocalTime = responseLocalTime;
     }
 
     // Constructor for creating new entity without id
-    public WeatherEntity(String requestedCityName, String cityName, String country, Integer temperature, LocalDateTime updatedAt, LocalDateTime responseLocalTime) {
+    public WeatherEntity(String requestedCityName, String cityName, String country, Integer temperature, LocalDateTime updatedTime, LocalDateTime responseLocalTime) {
     this.id = "";
     this.requestedCityName = requestedCityName;
     this.cityName = cityName;
     this.country = country;
     this.temperature = temperature;
-    this.updatedAt = updatedAt;
+    this.updatedTime = updatedTime;
     this.responseLocalTime = responseLocalTime;
     }
     public WeatherEntity() {
@@ -68,7 +68,7 @@ public class WeatherEntity {
     }
 
     public LocalDateTime getUpdatedTime() {
-        return updatedAt;
+        return updatedTime;
     }
 
     public LocalDateTime getResponseLocalTime() {

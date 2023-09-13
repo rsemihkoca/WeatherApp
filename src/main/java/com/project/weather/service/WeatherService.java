@@ -36,11 +36,7 @@ public class WeatherService {
         Optional<WeatherEntity> weatherEntityOptional = weatherRepository.findFirstByRequestedCityNameOrderByUpdatedTimeDesc(city);
 
         //If we have weatherEntityOptional, we can use it, otherwise we need to call API
-        if (!weatherEntityOptional.isPresent()) {
-            return WeatherDto.convert(getWeatherFromWeatherStack(city));
-        }
-
-        return WeatherDto.convert(weatherEntityOptional.get());
+        return weatherEntityOptional.map(WeatherDto::convert).orElseGet(() -> WeatherDto.convert(getWeatherFromWeatherStack(city)));
 
     }
 
