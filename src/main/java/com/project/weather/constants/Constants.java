@@ -17,7 +17,7 @@ public class Constants {
     public void setApiUrl(String apiUrl) {
         Constants.API_URL = apiUrl;
     }
-    @Value("${weather-stack.api-key}")
+    @Value(value = "${weather-stack.api-key}")
     public void setApiKey(String apiKey) {
         Constants.API_KEY = apiKey;
     }

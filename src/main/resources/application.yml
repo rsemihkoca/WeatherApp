@@ -7,9 +7,12 @@ spring:
   h2:
     console:
       enabled: true
+
   config:
-    import: optional:file:.env[.properties]
+    import : optional:file:.env[.properties]
+    # Add working directory to the classpath or use absolute path
+
 
 weather-stack:
   api-url: http://api.weatherstack.com/current
-  api-key: ${API-KEY:default}
+  api-key: ${WEATHER_STACK_API_KEY}
