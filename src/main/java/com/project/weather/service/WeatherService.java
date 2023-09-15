@@ -3,6 +3,7 @@ package com.project.weather.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.project.weather.constants.Constants;
 import com.project.weather.dto.WeatherDto;
 import com.project.weather.dto.WeatherResponse;
 import com.project.weather.model.WeatherEntity;
@@ -45,8 +46,8 @@ public class WeatherService {
     }
 
     private WeatherEntity getWeatherFromWeatherStack(String city) {
-        String url = "http://api.weatherstack.com/current?access_key=645749b5550ea09a8814a4a0cfbe3f8d&query=" + city;
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(getWeatherStackUrl(city), String.class);
 
         try {
             WeatherResponse weatherResponse = objectMapper.readValue(responseEntity.getBody(), WeatherResponse.class);
@@ -54,6 +55,11 @@ public class WeatherService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String getWeatherStackUrl(String city) {
+
+        return Constants.API_URL + Constants.ACCESS_KEY_PARAM + Constants.API_KEY + Constants.QUERY_KEY_PARAM + city;
     }
 
     private WeatherEntity saveWeatherEntity(String city, WeatherResponse weatherResponse) {
