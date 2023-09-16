@@ -1,4 +1,4 @@
-package com.assignment.openweatherservice.exception;
+package com.project.weather.exception;
 
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
 import jakarta.validation.ConstraintViolationException;
