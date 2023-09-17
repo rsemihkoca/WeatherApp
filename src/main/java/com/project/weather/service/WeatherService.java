@@ -63,7 +63,7 @@ public class WeatherService {
     @PostConstruct
     @Scheduled(fixedRateString = "10000")
     public void clearCache() {
-        logger.info("Cache cleaed");
+        logger.info("Cache cleared");
     }
 
     private WeatherEntity getWeatherFromWeatherStack(String city) {
