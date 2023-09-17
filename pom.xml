@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.project</groupId>
-    <artifactId>weather</artifactId>
+    <artifactId>WeatherApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>weather</name>
     <description>Spring Boot Project</description>

@@ -8,7 +8,15 @@ import com.project.weather.dto.WeatherDto;
 import com.project.weather.dto.WeatherResponse;
 import com.project.weather.model.WeatherEntity;
 import com.project.weather.repository.WeatherRepository;
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +26,10 @@ import java.util.Optional;
 
 
 @Service
+@CacheConfig(cacheNames = {"weathers"})
 public class WeatherService {
+
+    private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
     private final WeatherRepository weatherRepository;
 
@@ -31,7 +42,10 @@ public class WeatherService {
 
     private final ObjectMapper objectMapper = new ObjectMapper(); // for converting JSON to Java object
 
+    @Cacheable(key = "#city")
     public WeatherDto getWeatherByCityName(String city) {
+
+        logger.info("Requested city : " + city);
 
         //Returned value can be null, so we need to use Optional
         Optional<WeatherEntity> weatherEntityOptional = weatherRepository.findFirstByRequestedCityNameOrderByUpdatedTimeDesc(city);
@@ -43,6 +57,13 @@ public class WeatherService {
             }
             return WeatherDto.convert(weather);
         }).orElseGet(() -> WeatherDto.convert(getWeatherFromWeatherStack(city)));
+    }
+
+    @CacheEvict(allEntries = true)
+    @PostConstruct
+    @Scheduled(fixedRateString = "10000")
+    public void clearCache() {
+        logger.info("Cache cleared");
     }
 
     private WeatherEntity getWeatherFromWeatherStack(String city) {
